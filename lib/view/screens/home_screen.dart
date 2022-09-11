@@ -1,7 +1,11 @@
+import 'package:book_it/utils/app_info_list.dart';
 import 'package:book_it/utils/app_styles.dart';
 import 'package:book_it/view/screens/ticket_view.dart';
+import 'package:book_it/widgets/hotel_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+
+import '../../utils/app_layout.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,7 +20,7 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                const Gap(40),
+                Gap(AppLayout.getHeight(40)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -27,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                           'Good Morning',
                           style: Styles.headLineStyle3,
                         ),
-                        const Gap(5),
+                        Gap(AppLayout.getHeight(5)),
                         Text(
                           'Book Tickets',
                           style: Styles.headLineStyle,
@@ -35,8 +39,8 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     Container(
-                      height: 50,
-                      width: 50,
+                      height: AppLayout.getHeight(50),
+                      width: AppLayout.getWidth(50),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         image: const DecorationImage(
@@ -47,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Gap(25),
+                Gap(AppLayout.getHeight(25)),
                 Container(
                   // height: 40,
                   // width: 50,
@@ -60,13 +64,13 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Icons.search,
                         color: Colors.grey,
                       ),
-                      Gap(5),
-                      Expanded(
+                      Gap(AppLayout.getWidth(5)),
+                      const Expanded(
                         child: TextField(
                           decoration: InputDecoration(
                             hintText: 'Search',
@@ -78,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Gap(20),
+                Gap(AppLayout.getHeight(20)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -89,14 +93,51 @@ class HomeScreen extends StatelessWidget {
                     InkWell(
                       child: Text(
                         'View all',
-                        style: Styles.textStyle.copyWith(color: Styles.primaryColor),
+                        style: Styles.textStyle
+                            .copyWith(color: Styles.primaryColor),
                       ),
                     ),
                   ],
                 ),
-                const Gap(15),
-                const TicketView(),
+                Gap(AppLayout.getHeight(15)),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  // padding: const EdgeInsets.only(left: 20),
+                  child: Row(
+                    children: ticketList
+                        .map((ticketItem) => TicketView(
+                              ticket: ticketItem,
+                            ))
+                        .toList(),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Hotels',
+                      style: Styles.headLineStyle2,
+                    ),
+                    InkWell(
+                      child: Text(
+                        'View all',
+                        style: Styles.textStyle
+                            .copyWith(color: Styles.primaryColor),
+                      ),
+                    ),
+                  ],
+                ),
               ],
+            ),
+          ),
+          Gap(AppLayout.getHeight(15)),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: Row(
+              children: hotelList
+                  .map((hotelItem) => HotelWidget(hotel: hotelItem))
+                  .toList(),
             ),
           ),
         ],
